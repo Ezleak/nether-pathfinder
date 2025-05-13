@@ -6,14 +6,15 @@ sudo apt-get update && sudo apt-get install -y ninja-build
 function cmake_build {
     local ANDROID_ABI=$1
     local BUILD_DIR="build_${ANDROID_ABI}"
-    local NDK_HOME="/usr/local/lib/android/sdk/ndk/25.2.9519653"
-    local TOOLCHAIN_FILE="${NDK_HOME}/build/cmake/android.toolchain.cmake"
+    local NDK_VERSION="25.2.9519653"
+    local NDK_PATH="/usr/local/lib/android/sdk/ndk/${NDK_VERSION}"
+    local TOOLCHAIN_FILE="${NDK_PATH}/build/cmake/android.toolchain.cmake"
     local SYSTEM_NINJA=$(which ninja)
 
-    # 验证NDK工具链文件存在性
     if [ ! -f "$TOOLCHAIN_FILE" ]; then
-        echo "Error: NDK toolchain file missing at $TOOLCHAIN_FILE" >&2
-        exit 1
+        sdkmanager --install "ndk;${NDK_VERSION}" --channel=3
+        export NDK_PATH="/usr/local/lib/android/sdk/ndk/${NDK_VERSION}"
+        TOOLCHAIN_FILE="${NDK_PATH}/build/cmake/android.toolchain.cmake"
     fi
 
     mkdir -p $BUILD_DIR
