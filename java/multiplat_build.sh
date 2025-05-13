@@ -24,5 +24,4 @@ function do_build {
     rm -rf build
 }
 
-do_build $1 aarch64-linux-gnu libnether_pathfinder-aarch64.so
 do_build $1 aarch64-Android libnether_pathfinder-aarch64.so
