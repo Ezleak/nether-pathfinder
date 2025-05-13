@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 
+sudo apt-get update && sudo apt-get install -y ninja-build
+
 function cmake_build {
     local ANDROID_ABI=$1
     local BUILD_DIR="build_${ANDROID_ABI}"
