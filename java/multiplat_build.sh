@@ -2,29 +2,6 @@
 
 set -e
 
-/*
-function do_build {
-    mkdir build
-    pushd build
-    local java_root=$1
-    local target=$2
-    local output_path=$3
-    echo "Building $target..."
-
-    CXXFLAGS="-target $target" cmake -G Ninja $java_root/.. \
-      -DPATHFINDER_TARGET=$target \
-      -DCMAKE_C_COMPILER=$(realpath $java_root/zigcc.sh) -DCMAKE_CXX_COMPILER=$(realpath $java_root/zigcxx.sh) \
-      -DCMAKE_AR=$(realpath $java_root/zigar.sh) \
-      -DCMAKE_RANLIB=$(realpath $java_root/zigranlib.sh) \
-      -DCMAKE_BUILD_TYPE=Release
-
-    ninja -j `nproc`
-
-    cp libnether_pathfinder.so ../$output_path
-    popd
-    rm -rf build
-}
-*/
 # 新增NDK构建函数
 function do_ndk_build {
     local java_root=$1
@@ -50,14 +27,13 @@ function do_ndk_build {
     rm -rf build
 }
 
-/* 原Zig编译目标
-do_build $1 x86_64-linux-gnu libnether_pathfinder-x86_64.so
-do_build $1 aarch64-linux-gnu libnether_pathfinder-aarch64.so
-do_build $1 x86_64-macos-none libnether_pathfinder-x86_64.dylib
-do_build $1 aarch64-macos-none libnether_pathfinder-aarch64.dylib
-do_build $1 x86_64-windows-gnu nether_pathfinder-x86_64.dll
-do_build $1 aarch64-windows-gnu nether_pathfinder-aarch64.dll
-*/
+# 原Zig编译目标
+#do_build $1 x86_64-linux-gnu libnether_pathfinder-x86_64.so
+#do_build $1 aarch64-linux-gnu libnether_pathfinder-aarch64.so
+#do_build $1 x86_64-macos-none libnether_pathfinder-x86_64.dylib
+#do_build $1 aarch64-macos-none libnether_pathfinder-aarch64.dylib
+#do_build $1 x86_64-windows-gnu nether_pathfinder-x86_64.dll
+#do_build $1 aarch64-windows-gnu nether_pathfinder-aarch64.dll
 
 # 新增Android NDK构建(需设置环境变量ANDROID_NDK和API_LEVEL)
 if [ -n "$ANDROID_NDK" ] && [ -n "$API_LEVEL" ]; then
