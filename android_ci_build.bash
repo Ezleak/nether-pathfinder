@@ -1,8 +1,8 @@
 #!/bin/bash
 # set -e
 
-git clone --depth 1 https://github.com/g-truc/glm.git src/main/cpp/include/glm
-git clone --depth 1 https://github.com/stbrumme/xxhash.git src/main/cpp/3rdparty/xxhash
+git clone --depth 1 https://github.com/zlib-ng/zlib-ng .
+git clone --depth 1 https://github.com/abseil/abseil-cpp .
 cmake_build () {
   ANDROID_ABI=$1
   mkdir -p build
