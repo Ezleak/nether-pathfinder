@@ -9,7 +9,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@main
-
+      with:
+          submodules: 'recursive'
+          
     - name: Configure CMake and Build
       run: bash android_ci_build.bash
 
