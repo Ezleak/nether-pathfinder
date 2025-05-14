@@ -8,6 +8,7 @@ find_package(PkgConfig) # not required
 if(PkgConfig_FOUND)
     pkg_check_modules(GBENCHMARK IMPORTED_TARGET benchmark) # not required
 endif()
+
 set(CMAKE_C_COMPILER_TARGET ${PATHFINDER_TARGET})
 set(CMAKE_CROSSCOMPILING True)
 set(WITH_SANITIZER False)
@@ -16,10 +17,19 @@ set(ZLIB_ENABLE_TESTS False)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 add_subdirectory(zlib-ng)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++20 -Wall")
-set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE}")
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -O0")
-message("${CMAKE_CXX_COMPILER_ID} ${CMAKE_CXX_COMPILER_VERSION}")
+enable_language(C)
+enable_language(CXX)
+
+set(CMAKE_CXX_STANDARD 20)
+set(CAMKE_C_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O3 -pipe -integrated-as -mllvm -polly -mllvm -polly-vectorizer=stripmine -mllvm -polly-invariant-load-hoisting -mllvm -polly-run-inliner -mllvm -polly-run-dce -mllvm -polly-invariant-load-hoisting -flto=thin -mllvm -polly-run-inliner -mllvm -polly-run-dce -mllvm -polly-parallel -mllvm -polly-scheduling=dynamic -flto=thin -fno-emulated-tls -fwhole-program-vtables -fdata-sections -ffunction-sections -fmerge-all-constants -mllvm -polly-detect-keep-going -mllvm -polly-ast-use-context -march=armv8-a+simd -fvisibility=hidden -Wall -Wextra -fPIC -DPIC -ferror-limit=0 -Wno-return-type -Wno-unused-parameter -Wno-c++98-compat -Wno-c++98-compat-pedantic -DGLM_FORCE_INTRINSICS")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3 -pipe -integrated-as -mllvm -polly -mllvm -polly-vectorizer=stripmine -mllvm -polly-invariant-load-hoisting -mllvm -polly-run-inliner -mllvm -polly-run-dce -mllvm -polly-invariant-load-hoisting -flto=thin -mllvm -polly-run-inliner -mllvm -polly-run-dce -mllvm -polly-parallel -mllvm -polly-scheduling=dynamic -flto=thin -fno-emulated-tls -fwhole-program-vtables -fdata-sections -ffunction-sections -fmerge-all-constants -mllvm -polly-detect-keep-going -mllvm -polly-ast-use-context -march=armv8-a+simd -fvisibility=hidden -fPIC -DPIC -Wall -Wextra -ferror-limit=0 -Wno-return-type -Wno-unused-parameter -Wno-c++98-compat -Wno-c++98-compat-pedantic -DGLM_FORCE_INTRINSICS")
+set(LINK_OPTIONS "${CMAKE_LINK_OPTIONS} -fuse-ld=lld -flto=thin -Wl,-plugin-opt=-emulated-tls=0")
+set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_LINK_OPTIONS} -fuse-ld=lld -flto=thin -Wl,-plugin-opt=-emulated-tls=0")
+set(CMAKE_ANDROID_STL_TYPE system)
+set(CMAKE_ANDROID_LD "lld")
 
 file(GLOB_RECURSE SRC src/*)
 list(REMOVE_ITEM SRC "${CMAKE_CURRENT_SOURCE_DIR}/src/benchmark_main.cpp" "${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp" "${CMAKE_CURRENT_SOURCE_DIR}/src/baritone_pather.cpp")
@@ -41,15 +51,6 @@ endif()
 target_include_directories(nether_pathfinder PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/zlib-ng)
 target_link_libraries(nether_pathfinder PRIVATE zlibstatic)
 
-if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-    message(WARNING "gcc is not recommended")
-elseif (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
-    if (CMAKE_CXX_COMPILER_VERSION VERSION_LESS 13.0)
-        message(FATAL_ERROR "requires clang at least clang 13")
-    endif()
-endif()
-
-#target_link_options(nether_pathfinder PRIVATE "-static-libgcc" "-static-libstdc++")
 if (USE_ABSEIL)
     add_subdirectory(abseil-cpp)
     target_link_libraries(nether_pathfinder absl::flat_hash_map)
