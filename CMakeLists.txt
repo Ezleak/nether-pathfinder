@@ -15,7 +15,7 @@ set(WITH_SANITIZER False)
 set(ZLIBNG_ENABLE_TESTS False)
 set(ZLIB_ENABLE_TESTS False)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
-add_subdirectory(zlib-ng)
+# add_subdirectory(zlib-ng)
 
 enable_language(C)
 enable_language(CXX)
