@@ -1,8 +1,6 @@
 #!/bin/bash
 # set -e
 
-git clone --depth 1 https://github.com/aaaapai/zlib-ng
-git clone --depth 1 https://github.com/abseil/abseil-cpp
 cmake_build () {
   ANDROID_ABI=$1
   mkdir -p build
