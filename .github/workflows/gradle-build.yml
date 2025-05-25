@@ -16,10 +16,6 @@ jobs:
         uses: gradle/gradle-build-action@749f47bda3e44aa060e82d7b3ef7e40d953bd629
       - name: Run gradle build
         run: |
-          echo "Downloading android-ndk from google server ..."
-          curl https://dl.google.com/android/repository/r28b-linux.zip --output r28b-linux.zip &> /dev/null
-          echo "Extracting android-ndk to a folder ..."
-          unzip r28b-linux.zip &> /dev/null
           cd java
           nix develop --command ./gradlew build
       - name: Upload lib
