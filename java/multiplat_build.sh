@@ -12,6 +12,8 @@ function do_build {
 
     # 特殊处理Android目标
     if [[ $target == *"android"* ]]; then
+        wget https://dl.google.com/android/repository/android-ndk-r25c-linux.zip
+        unzip android-ndk-r25c-linux.zip >> /dev/null
         export NDK_ROOT=${NDK_ROOT:-$java_root/../android-ndk}
         $NDK_ROOT/ndk-build \
             NDK_PROJECT_PATH=. \
