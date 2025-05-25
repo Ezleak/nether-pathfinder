@@ -54,11 +54,6 @@ APP_STL := c++_static
 EOF
 
 # 原有构建目标
-do_build $1 x86_64-linux-gnu libnether_pathfinder-x86_64.so
+do_build $1 aarch64-linux-gnu libnether_pathfinder-aarch64.so
 # 将aarch64-linux-gnu改为Android目标
-do_build $1 arm64-v8a-android libnether_pathfinder-arm64-v8a.so
-# zig构建目标保持不变
-do_build $1 x86_64-macos-none libnether_pathfinder-x86_64.dylib
-do_build $1 aarch64-macos-none libnether_pathfinder-aarch64.dylib
-do_build $1 x86_64-windows-gnu nether_pathfinder-x86_64.dll
-do_build $1 aarch64-windows-gnu nether_pathfinder-aarch64.dll
+#do_build $1 arm64-v8a-android libnether_pathfinder-arm64-v8a.so
