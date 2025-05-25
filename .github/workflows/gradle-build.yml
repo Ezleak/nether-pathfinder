@@ -18,3 +18,8 @@ jobs:
         run: |
           cd java
           nix develop --command ./gradlew build
+      - name: Upload lib
+        uses: actions/upload-artifact@v4
+        with:
+          name: M
+          path: ./
