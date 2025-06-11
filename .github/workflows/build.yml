@@ -14,7 +14,10 @@ jobs:
           submodules: 'recursive'
           
     - name: Configure CMake and Build
-      run: bash android_ci_build.bash
+      run:    |
+               wget https://dl.google.com/android/repository/android-ndk-r25-linux.zip 
+               unzip android-ndk-r25-linux.zip
+               android_ci_build.bash
 
     - name: Upload build output
       uses: actions/upload-artifact@main
